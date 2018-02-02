@@ -17,6 +17,3 @@ pep8:
   options:
     max-line-length: 120
 
-pylint:
-  run: true
-
