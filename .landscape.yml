@@ -1,0 +1,26 @@
+autodetect: yes
+strictness: medium
+test-warnings: false
+doc-warnings: true
+
+ignore-paths:
+  - .git
+  - docs
+
+pep8:
+  run: true
+  disable:
+    - W602
+    - W603
+  enable:
+    - W601
+  options:
+    max-line-length: 120
+
+pylint:
+  run: true
+
+pep257:
+  disable:
+    - D203
+  run: true
