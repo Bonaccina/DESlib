@@ -247,7 +247,7 @@ class DESClustering(DES):
 
         if self.N <= 0 or self.J <= 0:
             raise ValueError("The values of N and J should be higher than 0"
-                             "N, J" .format(self.N, self.J))
+                             "N:{0}, J:{1}".format(self.N, self.J))
         if self.N < self.J:
             raise ValueError("The value of N should be greater or equals than J"
-                             "N, J" .format(self.N, self.J))
+                             "N:{0}, J:{1}".format(self.N, self.J))

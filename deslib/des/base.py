@@ -41,11 +41,11 @@ class DES(DS):
 
     References
     ----------
-    Britto, Alceu S., Robert Sabourin, and Luiz ES Oliveira. "Dynamic selection of classifiers—a comprehensive review."
+    Britto, Alceu S., Robert Sabourin, and Luiz ES Oliveira. "Dynamic selection of classifiers-a comprehensive review."
     Pattern Recognition 47.11 (2014): 3665-3680.
 
-    R. M. O. Cruz, R. Sabourin, and G. D. Cavalcanti, “Dynamic classifier selection: Recent advances and perspectives,”
-    Information Fusion, vol. 41, pp. 195 – 216, 2018.
+    R. M. O. Cruz, R. Sabourin, and G. D. Cavalcanti, "Dynamic classifier selection: Recent advances and perspectives"
+    Information Fusion, vol. 41, pp. 195 - 216, 2018.
     """
     __metaclass__ = ABCMeta
 
