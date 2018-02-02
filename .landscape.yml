@@ -20,7 +20,3 @@ pep8:
 pylint:
   run: true
 
-pep257:
-  disable:
-    - D203
-run: true
