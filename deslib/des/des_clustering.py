@@ -111,7 +111,8 @@ class DESClustering(DES):
         self
         """
 
-        self._set_dsel(X, y)
+        y_ind = self.encode_labels(y)
+        self._set_dsel(X, y_ind)
         labels = self.roc_algorithm.fit_predict(X)
 
         # For each cluster estimate the most accurate and most competent classifiers for it.

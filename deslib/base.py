@@ -13,8 +13,10 @@ from sklearn.base import ClassifierMixin
 from sklearn.exceptions import NotFittedError
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.utils.validation import check_X_y, check_is_fitted
+from sklearn.preprocessing import LabelEncoder
 
 from deslib.util.aggregation import predict_proba_ensemble
+
 
 
 class DS(ClassifierMixin):
@@ -140,10 +142,19 @@ class DS(ClassifierMixin):
         -------
         self
         """
-        check_X_y(X, y)
-        self._set_dsel(X, y)
-        self._fit_region_competence(X, y, self.k)
+
+        y_ind = self.encode_labels(y)
+
+        check_X_y(X, y_ind)
+        self._set_dsel(X, y_ind)
+        self._fit_region_competence(X, y_ind, self.k)
         return self
+
+    def encode_labels(self, y):
+        enc = LabelEncoder()
+        y_ind = enc.fit_transform(y)
+        self.classes = enc.classes_
+        return y_ind
 
     def _fit_region_competence(self, X, y, k):
         """Fit the k-NN classifier inside the dynamic selection method.
@@ -177,7 +188,6 @@ class DS(ClassifierMixin):
         """
         self.DSEL_data = X
         self.DSEL_target = y
-        self.classes = np.unique(self.DSEL_target)
         self.n_classes = self.classes.size
         self.n_features = X.shape[1]
         self.n_samples = self.DSEL_target.size
@@ -228,7 +238,7 @@ class DS(ClassifierMixin):
         self._check_input_predict(X)
 
         n_samples = X.shape[0]
-        predicted_labels = np.zeros(n_samples)
+        predicted_labels = np.zeros(n_samples, dtype=np.intp)
         for index, instance in enumerate(X):
             # Do not use dynamic selection if all base classifiers agrees on the
             # same label.
@@ -264,7 +274,7 @@ class DS(ClassifierMixin):
                 self.neighbors = None
                 self.distances = None
 
-        return predicted_labels
+        return self.classes.take(predicted_labels)
 
     def predict_proba(self, X):
         """Estimates the posterior probabilities for sample in X.

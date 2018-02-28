@@ -1,6 +1,7 @@
 import pytest
 from sklearn.exceptions import NotFittedError
 from sklearn.linear_model import Perceptron
+from unittest.mock import Mock
 
 from deslib.base import DS
 from deslib.tests.examples_test import *
@@ -338,3 +339,17 @@ def test_predict_proba_DFP():
     ds_test.predict_proba(query)
     assert np.array_equal(ds_test.DFP_mask, np.array([1, 1, 0]))
 
+
+def test_label_encoder():
+    X_dsel_ex1 = np.array([[-1, 1], [-0.75, 0.5], [-1.5, 1.5]])
+    y_dsel_ex1 = np.array(['cat', 'dog', 'plane'])
+
+    query = np.atleast_2d([[1, 0], [-1,-1]])
+    ds_test = DS(create_pool_classifiers(), k=2)
+    ds_test.fit(X_dsel_ex1, y_dsel_ex1)
+    ds_test.neighbors = neighbors_ex1[0, :]
+    ds_test.distances = distances_ex1[0, :]
+    ds_test.classify_instance = Mock()
+    ds_test.classify_instance.side_effect = [1, 0]
+    predictions = ds_test.predict(query)
+    assert np.array_equal(predictions, ['dog', 'cat'])
